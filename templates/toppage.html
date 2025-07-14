@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang=" ja" >
+<head>
+   <meta charset="UTF-8">
+   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/top.css') }}">
+   <title>to do list</title>
+</head>
+
+<body>
+<div class="head">
+    <div class="head_textbox">
+        To Do List
+    </div>
+</div>
+<div class="menu">
+   <ul>
+      <div class="now_menu"><li><a href="{{ url_for('home') }}">Top</a></li></div>
+    <div class="else_menu"><li><a href="{{ url_for('detail') }}">Detail</a></li></div>
+    <div class="else_menu"><li><a href="{{ url_for('edit') }}">Edit</a></li></div>
+   </ul>
+</div>
+<div class="main">
+<div class="assignment">
+  <h1 class="title">課題情報</h1>
+  <ul class="assignment_list">
+    <li class="listtop">講義名</li>
+    <li class="listtop">講義回</li>
+    <li class="listtop">提出日</li>
+    {% for lecture_name, session, due_date in assignments %}
+      <li class="cont">{{ lecture_name }}</li>
+      <li class="cont">{{ session }}</li>
+      <li class="cont">{{ due_date }}</li>
+    {% endfor %}
+  </ul>
+</div>
+<div class="test">
+    <h1 class="title">テスト情報</h1>
+    <ul class="test_list">
+        <li class="listtop">講義名</li>
+        <li class="listtop">講義回</li>
+        <li class="listtop">テスト日</li>
+        <li class="listtop">テスト区分</li>
+
+        {% for name, session, date, type in tests %}
+            <li class="cont">{{ name }}</li>
+            <li class="cont">{{ session }}</li>
+            <li class="cont">{{ date }}</li>
+            <li class="cont">{{ type }}</li>
+        {% endfor %}
+    </ul>
+    <p id="clock" style="text-align:right; margin-right: 1em; font-weight: bold;">現在時刻：</p>
+
+<script>
+function updateClock() {
+    const now = new Date();
+    const formatted = now.toLocaleString('ja-JP', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+    document.getElementById("clock").innerText = "現在時刻：" + formatted;
+}
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+</div>
+</body>

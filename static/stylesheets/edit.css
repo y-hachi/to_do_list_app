@@ -1,0 +1,188 @@
+﻿* {
+        margin: 0px;
+        padding: 0px;
+    }
+
+.head{
+    position: relative;
+    background-color: #42d4da;
+    width: 100%;
+    aspect-ratio: 18 / 1;
+}
+
+.head_textbox{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 3vmax;
+    padding: 0 1vmax;
+    color: black;
+}
+
+.menu ul {
+    display: flex;
+    flex-flow: row;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: blue;
+}
+
+.menu li {
+    border-right: 1px solid #bbbbbb;
+}
+  
+.now_menu li{
+    background: rgb(228, 117, 208); 
+}
+
+.menu li a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 1vmax 5vmax;
+    color: white;
+    transition:all 0.3s;
+}
+
+.else_menu li a:hover:not(.active) {
+    color: black;
+    background-color: #dee656;
+}
+
+.main {
+    padding: 3vmax 0vmax 0vmax 0vmax;
+    background-color: #d8f5d4;
+}
+
+.edit_list {
+    display: grid;
+    text-align: center;
+    width: 25%;
+    margin: auto;
+    padding: 0vmax 0vmax 2vmax 0vmax;
+}
+
+.edit_list ul {
+    border-radius :8px;
+    border-right: 1px solid #000000;
+}
+
+.edit_list li {
+    list-style:none;
+    min-height: 30px;
+    padding: 0.5vmax 1vmax; 
+    background: #ffffff; 
+    border-top: solid 1px #000000; 
+    border-bottom: solid 1px #000000; 
+    border-right: solid 1px #000000;
+    border-left: solid 1px #000000;
+}
+
+.edit_list li:first-child {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.edit_list li:nth-child(6) {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.lec {
+    background-color: #eed693;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    padding: 0vmax 0vmax 2vmax 0vmax;
+    border-top: solid 1px #000000; 
+    border-bottom: solid 1px #000000; 
+    border-right: solid 1px #000000;
+    border-left: solid 1px #000000;
+    border-radius: 20px;
+}
+
+.att {
+    background-color: #eed693;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    padding: 0vmax 0vmax 2vmax 0vmax;
+    border-top: solid 1px #000000; 
+    border-bottom: solid 1px #000000; 
+    border-right: solid 1px #000000;
+    border-left: solid 1px #000000;
+    border-radius: 20px;
+}
+
+.as {
+    background-color: #eed693;
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    padding: 0vmax 0vmax 2vmax 0vmax;
+    border-top: solid 1px #000000; 
+    border-bottom: solid 1px #000000; 
+    border-right: solid 1px #000000;
+    border-left: solid 1px #000000;
+    border-radius: 20px;
+}
+
+.test {
+    background-color: #eed693;
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    padding: 0vmax 0vmax 2vmax 0vmax;
+    border-top: solid 1px #000000; 
+    border-bottom: solid 1px #000000; 
+    border-right: solid 1px #000000;
+    border-left: solid 1px #000000;
+    border-radius: 20px;
+}
+
+.memo {
+    background-color: #eed693;
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    padding: 0vmax 0vmax 2vmax 0vmax;
+    border-top: solid 1px #000000; 
+    border-bottom: solid 1px #000000; 
+    border-right: solid 1px #000000;
+    border-left: solid 1px #000000;
+    border-radius: 20px;
+}
+
+.link {
+    background-color: #eed693;
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    padding: 0vmax 0vmax 2vmax 0vmax;
+    border-top: solid 1px #000000; 
+    border-bottom: solid 1px #000000; 
+    border-right: solid 1px #000000;
+    border-left: solid 1px #000000;
+    border-radius: 20px;
+}
+
+table {
+    margin: auto; 
+    border-collapse: collapse;
+}
+
+table th, table td {
+    text-align: center;       
+    padding: 0.5vmax 1vmax;
+    border: 1px solid #000;
+}
+
+.space {
+    height: 4vmax;
+    display: flex;
+    align-items: flex-end; /* 垂直方向の下部に配置 */
+    justify-content: center; /* 水平方向は中央揃え（任意） */
+}

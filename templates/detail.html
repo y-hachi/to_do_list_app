@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang=" ja" >
+<head>
+   <meta charset="UTF-8">
+   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/detail.css') }}">
+   <title>to do list</title>
+</head>
+
+<body>
+<div class="head">
+    <div class="head_textbox">
+        To Do List
+    </div>
+</div>
+<div class="menu">
+   <ul>
+      <div class="else_menu"><li><a href="{{ url_for('home') }}">Top</a></li></div>
+      <div class="now_menu"><li><a href="{{ url_for('detail') }}">Detail</a></li></div>
+      <div class="else_menu"><li><a href="{{ url_for('edit') }}">Edit</a></li></div>
+   </ul>
+</div>
+<div class="main">
+   {% if not lectures %}
+      <p style="text-align: center; color: red; font-weight: bold; margin-top: 2em;">
+         登録情報がありません。
+      </p>
+
+   {% else %}
+
+  {% for lecture_name, data in lecture_data.items() %}
+    <h2 style="text-align:center;">{{ lecture_name }}</h2>
+
+    <!-- 出席一覧 -->
+    <h3 style="text-align: center;">出席一覧</h3>
+    <table border="1" style="margin: auto; text-align: center;">
+      <tr><th>講義回</th><th>出席状況</th><th>操作</th></tr>
+      {% for att in data.attendance %}
+        <tr>
+          <td>{{ att[1] }}</td>
+          <td>{{ att[2] }}</td>
+          <td>
+            <form method="POST" action="{{ url_for('delete_attendance', id=att[0]) }}">
+              <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <!-- 課題情報 -->
+    <h3 style="text-align: center;">課題情報</h3>
+    <table border="1" style="margin: auto; text-align: center;">
+      <tr><th>講義回</th><th>提出期限</th><th>提出状況</th><th>優先度</th><th>変更</th><th>削除</th></tr>
+      {% for as in data.assignments %}
+        <tr>
+          <td>{{ as[1] }}</td>
+          <td>{{ as[2] }}</td>
+          <td>{{ as[3] }}</td>
+          <td>{{ as[4] }}</td>
+          <td>
+            <form method="POST" action="{{ url_for('detail') }}">
+              <input type="hidden" name="assignment_id" value="{{ as[0] }}">
+              <select name="new_status">
+                <option value="未提出" {% if as[3] == "未提出" %}selected{% endif %}>未提出</option>
+                <option value="提出済" {% if as[3] == "提出済" %}selected{% endif %}>提出済</option>
+              </select>
+              <button type="submit">変更</button>
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="{{ url_for('delete_assignment', id=as[0]) }}">
+              <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <!-- テスト情報 -->
+    <h3 style="text-align: center;">テスト情報</h3>
+    <table border="1" style="margin: auto; text-align: center;">
+      <tr><th>講義回</th><th>テスト区分</th><th>テスト日</th><th>操作</th></tr>
+      {% for t in data.tests %}
+        <tr>
+          <td>{{ t[1] }}</td>
+          <td>{{ t[2] }}</td>
+          <td>{{ t[3] }}</td>
+          <td>
+            <form method="POST" action="{{ url_for('delete_test', id=t[0]) }}">
+              <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <!-- メモ -->
+    <h3 style="text-align: center;">メモ</h3>
+    <table border="1" style="margin: auto; text-align: center;">
+      <tr><th>内容</th><th>操作</th></tr>
+      {% for m in data.memos %}
+        <tr>
+          <td>{{ m[1] }}</td>
+          <td>
+            <form method="POST" action="{{ url_for('delete_memo', id=m[0]) }}">
+              <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <!-- 参考リンク -->
+    <h3 style="text-align: center;">参考リンク</h3>
+    <table border="1" style="margin: auto; text-align: center;">
+  <tr><th>リンク</th><th>説明</th><th>操作</th></tr>
+  {% for r in data.resources %}
+    <tr>
+      <td><a href="{{ r[1] }}" target="_blank">{{ r[1] }}</a></td>
+      <td>{{ r[2] }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('delete_resource', id=r[0]) }}">
+          <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+
+    <hr style="margin: 3em 0;">
+  {% endfor %}
+  {% endif %}
+</div>
+</body>
