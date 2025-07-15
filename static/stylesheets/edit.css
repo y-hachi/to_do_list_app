@@ -65,6 +65,20 @@
     padding: 0vmax 0vmax 2vmax 0vmax;
 }
 
+.edit_list li a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 1vmax 2vmax;
+    color: black;
+    transition:all 0.3s;
+}
+
+.edit_list li a:hover:not(.active) {
+    color: black;
+    background-color: #edacfc;
+}
+
 .edit_list ul {
     border-radius :8px;
     border-right: 1px solid #000000;
@@ -73,8 +87,7 @@
 .edit_list li {
     list-style:none;
     min-height: 30px;
-    padding: 0.5vmax 1vmax; 
-    background: #ffffff; 
+    background: #b4e8f5; 
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
     border-right: solid 1px #000000;
@@ -96,7 +109,12 @@
     text-align: center;
     width: 50%;
     margin: auto;
-    padding: 0vmax 0vmax 2vmax 0vmax;
+    height: auto;
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    justify-content: center; /* ← これが縦中央揃え */
+    align-items: center;     /* 横中央揃え（オプション） */
+    padding: 0px 0px 20px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
     border-right: solid 1px #000000;
@@ -104,12 +122,23 @@
     border-radius: 20px;
 }
 
+.lec hr {
+    width: 100%;
+    border: 0.5px solid rgba(0, 0, 0, 0.3);
+    margin: 1em 0;
+}
+
 .att {
     background-color: #eed693;
     text-align: center;
     width: 50%;
     margin: auto;
-    padding: 0vmax 0vmax 2vmax 0vmax;
+    height: 10vh;
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    justify-content: center; /* ← これが縦中央揃え */
+    align-items: center;     /* 横中央揃え（オプション） */
+    padding: 0px 0px 5px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
     border-right: solid 1px #000000;
@@ -120,9 +149,14 @@
 .as {
     background-color: #eed693;
     text-align: center;
-    width: 60%;
+    width: 50%;
     margin: auto;
-    padding: 0vmax 0vmax 2vmax 0vmax;
+    height: 10vh;
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    justify-content: center; /* ← これが縦中央揃え */
+    align-items: center;     /* 横中央揃え（オプション） */
+    padding: 0px 0px 10px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
     border-right: solid 1px #000000;
@@ -133,9 +167,14 @@
 .test {
     background-color: #eed693;
     text-align: center;
-    width: 60%;
+    width: 50%;
     margin: auto;
-    padding: 0vmax 0vmax 2vmax 0vmax;
+    height: 10vh;
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    justify-content: center; /* ← これが縦中央揃え */
+    align-items: center;     /* 横中央揃え（オプション） */
+    padding: 0px 0px 10px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
     border-right: solid 1px #000000;
@@ -146,9 +185,14 @@
 .memo {
     background-color: #eed693;
     text-align: center;
-    width: 60%;
+    width: 50%;
     margin: auto;
-    padding: 0vmax 0vmax 2vmax 0vmax;
+    height: 10vh;
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    justify-content: center; /* ← これが縦中央揃え */
+    align-items: center;     /* 横中央揃え（オプション） */
+    padding: 0px 0px 10px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
     border-right: solid 1px #000000;
@@ -159,9 +203,14 @@
 .link {
     background-color: #eed693;
     text-align: center;
-    width: 60%;
+    width: 50%;
     margin: auto;
-    padding: 0vmax 0vmax 2vmax 0vmax;
+    height: 10vh;
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    justify-content: center; /* ← これが縦中央揃え */
+    align-items: center;     /* 横中央揃え（オプション） */
+    padding: 0px 0px 10px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
     border-right: solid 1px #000000;
@@ -181,8 +230,14 @@ table th, table td {
 }
 
 .space {
-    height: 4vmax;
+    height: 6vmax;
     display: flex;
     align-items: flex-end; /* 垂直方向の下部に配置 */
     justify-content: center; /* 水平方向は中央揃え（任意） */
+}
+
+.section-wrapper {
+    display: flex;
+    justify-content: center;   /* 水平中央揃え */
+    align-items: center;       /* 垂直中央揃え */
 }

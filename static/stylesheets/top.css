@@ -3,6 +3,12 @@
         padding: 0px;
     }
 
+body {
+    background-color: #d8f5d4;
+    min-height: 100vh;
+    margin: 0;
+}
+
 .head{
     position: relative;
     background-color: #42d4da;
@@ -53,16 +59,17 @@
 }
 
 .assignment {
-    height: 100vh;
+    height: auto;
     width: 50%;
 }
 
 .test {
-    height: 100vh;
+    height: auto;
     width: 50%;
 }
 
 .main {
+    height: auto;
     padding: 3vmax 0vmax 0vmax 0vmax;
     background-color: #d8f5d4;
 }
@@ -155,6 +162,31 @@
 
 .test_list li:nth-child(24) {
     border-bottom-right-radius: 10px;
+}
+
+.space {
+    height: 3vmax;
+    display: flex;
+}
+
+#clock {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+    margin: 0;
+}
+
+.box {
+    background-color: rgb(170, 227, 252);
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0px 20px 0px 20px;
+    box-shadow: 0px 0px 15px 0px rgba(98,98,98,0.8);
+    display: flex;
+    align-items: center;     /* ← 垂直方向中央寄せ */
+    justify-content: center; /* ← 水平方向中央寄せ */
+    height: 100px;           /*  ← ボックスの高さを指定する */
+    border-radius: 10px;
 }
 
 @media all and (min-width: 500px) {

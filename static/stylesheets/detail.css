@@ -3,6 +3,12 @@
         padding: 0px;
     }
 
+body {
+    background-color: #d8f5d4;
+    min-height: 100vh;
+    margin: 0;
+}
+
 .head{
     position: relative;
     background-color: #42d4da;
@@ -53,6 +59,40 @@
 }
 
 .main {
-    padding: 3vmax 0vmax 0vmax 0vmax;
     background-color: #d8f5d4;
+}
+
+.table {
+    background-color: #9ad0d8;
+    text-align: center;
+    width: 70%;
+    margin: auto;
+    padding: 0vmax 0vmax 2vmax 0vmax;
+    border-top: solid 1px #000000; 
+    border-bottom: solid 1px #000000; 
+    border-right: solid 1px #000000;
+    border-left: solid 1px #000000;
+    border-radius: 20px;
+}
+
+.space {
+    height: 3vmax;
+    display: flex;
+}
+
+.tablespace {
+    height: 1vmax;
+    display: flex;
+}
+
+table {
+    background-color: rgb(255, 255, 255);
+}
+
+.box {
+    width: fit-content;
+    background-color: rgb(240, 240, 240);
+    border: #000000 3px double; /*境界線の指定*/
+    padding:10px;
+    margin: 0 auto;
 }

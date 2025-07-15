@@ -21,12 +21,15 @@
 </div>
 <div class="main">
    {% if not lectures %}
-      <p style="text-align: center; color: red; font-weight: bold; margin-top: 2em;">
-         登録情報がありません。
+      <div class="space"></div>
+      <div class="box">
+      <p style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">
+        <font size="5">登録情報がありません</font>
       </p>
+      </div>
 
    {% else %}
-
+  <div class="table">
   {% for lecture_name, data in lecture_data.items() %}
     <h2 style="text-align:center;">{{ lecture_name }}</h2>
 
@@ -97,10 +100,11 @@
     <!-- メモ -->
     <h3 style="text-align: center;">メモ</h3>
     <table border="1" style="margin: auto; text-align: center;">
-      <tr><th>内容</th><th>操作</th></tr>
+      <tr><th>講義回</th><th>内容</th><th>操作</th></tr>
       {% for m in data.memos %}
         <tr>
-          <td>{{ m[1] }}</td>
+          <td>{{ m[1] }}回</td>
+          <td>{{ m[2] }}</td>
           <td>
             <form method="POST" action="{{ url_for('delete_memo', id=m[0]) }}">
               <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
@@ -129,6 +133,9 @@
 
     <hr style="margin: 3em 0;">
   {% endfor %}
+  <div class="tablespace"></div>
   {% endif %}
+  </div>
+<div class="space"></div>
 </div>
 </body>

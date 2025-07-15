@@ -56,6 +56,7 @@ cur.execute("""
 CREATE TABLE memos (
     memo_id INTEGER PRIMARY KEY AUTOINCREMENT,
     lecture_id INTEGER NOT NULL,
+    session INTEGER,
     content TEXT,
     FOREIGN KEY (lecture_id) REFERENCES lectures(lecture_id)
 );

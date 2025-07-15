@@ -1,9 +1,14 @@
 ﻿from flask import Flask, render_template
 import sqlite3
 from flask import Flask, render_template, request, redirect, url_for
+from flask import send_from_directory
 from datetime import datetime
 
 app = Flask(__name__)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static/icon', '/favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route("/")
 def home():
@@ -91,9 +96,10 @@ def detail():
 
         # メモ
         cursor.execute("""
-            SELECT memo_id, content
+            SELECT memo_id, session, content
             FROM memos
             WHERE lecture_id = ?
+            ORDER BY session
         """, (lecture_id,))
         memos = cursor.fetchall()
 
@@ -141,6 +147,7 @@ def edit():
                 cursor.execute("INSERT INTO lectures (lecture_name) VALUES (?)", (lecture_name,))
                 conn.commit()
                 message = "✅ 講義を追加しました。"
+            return redirect(url_for("edit", scroll_to="le", msg="lecture_added"))
 
         # --- 出席追加処理 ---
         elif form_type == "attendance":
@@ -149,14 +156,14 @@ def edit():
             status = request.form["attendance_status"]
             cursor.execute("SELECT 1 FROM attendances WHERE lecture_id = ? AND session = ?", (lecture_id, session))
             if cursor.fetchone():
-                return redirect(url_for("edit", msg="duplicate"))
+                return redirect(url_for("edit", msg="duplicate", scroll_to="at"))
             else:
                 cursor.execute("""
                     INSERT INTO attendances (lecture_id, session, attendance_status)
                     VALUES (?, ?, ?)
                 """, (lecture_id, session, status))
                 conn.commit()
-                return redirect(url_for("edit", msg="success"))
+                return redirect(url_for("edit", msg="success", scroll_to="at"))
 
         # --- 課題追加処理 ---
         elif form_type == "assignment":
@@ -171,6 +178,7 @@ def edit():
             """, (lecture_id, session, due_date, status, priority))
             conn.commit()
             message_as = "✅ 課題を追加しました。"
+            return redirect(url_for("edit", scroll_to="as"))
 
         elif "test_lecture_id" in request.form and "test_session" in request.form and "test_type" in request.form and "test_date" in request.form:
             lecture_id = request.form["test_lecture_id"]
@@ -184,17 +192,20 @@ def edit():
             """, (lecture_id, session, test_type, test_date))
             conn.commit()
             message_te = "✅ テスト情報を追加しました。"
+            return redirect(url_for("edit", scroll_to="te"))
 
-        elif "memo_lecture_id" in request.form and "memo_content" in request.form:
-            lecture_id = request.form["memo_lecture_id"]
+        elif form_type == "memo":
+            lecture_id = request.form["lecture_id"]
+            session = request.form["memo_session"]
             content = request.form["memo_content"]
 
             cursor.execute("""
-                INSERT INTO memos (lecture_id, content)
-                VALUES (?, ?)
-            """, (lecture_id, content))
+                INSERT INTO memos (lecture_id, session, content)
+                VALUES (?, ?, ?)
+            """, (lecture_id, session, content))
             conn.commit()
             message_memo = "✅ メモを追加しました。"
+            return redirect(url_for("edit", scroll_to="me", msg="memo_added"))
 
         elif "resource_lecture_id" in request.form and "resource_link" in request.form:
             lecture_id = request.form["resource_lecture_id"]
@@ -207,6 +218,7 @@ def edit():
             """, (lecture_id, link, description))
             conn.commit()
             message_re = "✅ 参考リンクを追加しました。"
+            return redirect(url_for("edit", scroll_to="re"))
 
     # 出席メッセージ
     msg_code = request.args.get("msg")
