@@ -1,16 +1,16 @@
-#To Do List アプリ  
-##動作環境（確認済み）  
+# To Do List アプリ  
+## 動作環境（確認済み）  
 OS：Windows  
 ブラウザ：Microsoft Edge  
 
-##使用方法  
-###データベースの初期化
+## 使用方法  
+### データベースの初期化
 _前提：app.dbを削除してあること_
 init_db.pyの実行  
 または  
 server_remake.batをダブルクリック
 
-###To Do Listアプリの実行  
+### To Do Listアプリの実行  
 server.pyを実行 - 1  
 または  
 page_open.batをダブルクリック - 2  
