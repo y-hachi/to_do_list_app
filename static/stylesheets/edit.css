@@ -1,7 +1,7 @@
 ﻿* {
-        margin: 0px;
-        padding: 0px;
-    }
+    margin: 0px;
+    padding: 0px;
+}
 
 .head{
     position: relative;
@@ -112,8 +112,8 @@
     height: auto;
     display: flex;
     flex-direction: column; /* 縦並び */
-    justify-content: center; /* ← これが縦中央揃え */
-    align-items: center;     /* 横中央揃え（オプション） */
+    justify-content: center; /* 縦中央揃え */
+    align-items: center;     /* 横中央揃え */
     padding: 0px 0px 20px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
@@ -136,8 +136,8 @@
     height: 10vh;
     display: flex;
     flex-direction: column; /* 縦並び */
-    justify-content: center; /* ← これが縦中央揃え */
-    align-items: center;     /* 横中央揃え（オプション） */
+    justify-content: center; /* 縦中央揃え */
+    align-items: center;     /* 横中央揃え */
     padding: 0px 0px 5px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
@@ -154,8 +154,8 @@
     height: 10vh;
     display: flex;
     flex-direction: column; /* 縦並び */
-    justify-content: center; /* ← これが縦中央揃え */
-    align-items: center;     /* 横中央揃え（オプション） */
+    justify-content: center; /* 縦中央揃え */
+    align-items: center;     /* 横中央揃え */
     padding: 0px 0px 10px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
@@ -172,8 +172,8 @@
     height: 10vh;
     display: flex;
     flex-direction: column; /* 縦並び */
-    justify-content: center; /* ← これが縦中央揃え */
-    align-items: center;     /* 横中央揃え（オプション） */
+    justify-content: center; /* 縦中央揃え */
+    align-items: center;     /* 横中央揃え */
     padding: 0px 0px 10px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
@@ -190,8 +190,8 @@
     height: 10vh;
     display: flex;
     flex-direction: column; /* 縦並び */
-    justify-content: center; /* ← これが縦中央揃え */
-    align-items: center;     /* 横中央揃え（オプション） */
+    justify-content: center; /* 縦中央揃え */
+    align-items: center;     /* 横中央揃え */
     padding: 0px 0px 10px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
@@ -208,8 +208,8 @@
     height: 10vh;
     display: flex;
     flex-direction: column; /* 縦並び */
-    justify-content: center; /* ← これが縦中央揃え */
-    align-items: center;     /* 横中央揃え（オプション） */
+    justify-content: center; /* 縦中央揃え */
+    align-items: center;     /* 横中央揃え */
     padding: 0px 0px 10px 0px;
     border-top: solid 1px #000000; 
     border-bottom: solid 1px #000000; 
@@ -232,12 +232,20 @@ table th, table td {
 .space {
     height: 6vmax;
     display: flex;
-    align-items: flex-end; /* 垂直方向の下部に配置 */
-    justify-content: center; /* 水平方向は中央揃え（任意） */
+    align-items: flex-end; /* 垂直方向 下部配置 */
+    justify-content: center; /* 水平方向 中央揃え */
 }
 
 .section-wrapper {
     display: flex;
     justify-content: center;   /* 水平中央揃え */
     align-items: center;       /* 垂直中央揃え */
+}
+
+table {
+    background-color: rgb(245, 245, 245);
+}
+
+table tr:first-child {
+    background-color: #b2ffea;
 }

@@ -3,139 +3,251 @@
 <head>
    <meta charset="UTF-8">
    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/detail.css') }}">
-   <title>to do list</title>
+   <link rel="icon" href="{{ url_for('static', filename='icon/favicon.ico') }}" type="image/x-icon">
+   <title>To Do List</title>
 </head>
 
 <body>
-<div class="head">
+  <div class="head">
     <div class="head_textbox">
-        To Do List
+        <font face="mv boli">To Do List</font>
     </div>
-</div>
-<div class="menu">
-   <ul>
+  </div>
+  <div class="menu">
+    <ul>
       <div class="else_menu"><li><a href="{{ url_for('home') }}">Top</a></li></div>
       <div class="now_menu"><li><a href="{{ url_for('detail') }}">Detail</a></li></div>
       <div class="else_menu"><li><a href="{{ url_for('edit') }}">Edit</a></li></div>
-   </ul>
-</div>
-<div class="main">
-   {% if not lectures %}
-      <div class="space"></div>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="space"></div>
+
+    {% if not lectures %}
       <div class="box">
-      <p style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">
-        <font size="5">登録情報がありません</font>
-      </p>
+        <p style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">
+          <font size="5">登録情報がありません</font>
+        </p>
+      </div>
+    
+    {% else %}
+      <div class="lecture-nav">
+        <h3 style="text-align:center;">講義リスト</h3>
+        <ul class="lecture-nav-table">
+          {% for lecture_name in lecture_data.keys() %}
+            <li><a href="#lecture-{{ loop.index }}">{{ lecture_name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+  
+      <div class="space"></div>
+
+      {% for lecture_name, data in lecture_data.items() %}
+        <div class="table">
+
+          <div class="topspace"></div>
+
+        <div class="box">
+          <h2 id="lecture-{{ loop.index }}" class="anchor" style="text-align:center;">{{ lecture_name }}</h2>
+        </div>
+
+        <!-- 出席一覧 -->
+        <div class="tspace"></div>
+
+        <h3 style="text-align: center;">出席一覧</h3>
+        <table border="1" style="margin: auto; text-align: center;">
+          <tr><th>講義回</th><th>出席状況</th><th>操作</th></tr>
+          {% if data.attendance %}
+            {% for att in data.attendance %}
+              <tr>
+                <td>{{ att[1] }}</td>
+                <td>{{ att[2] }}</td>
+                <td>
+                  <form method="POST" action="{{ url_for('delete_attendance', id=att[0]) }}">
+                    <input type="submit" value="削除" class="delete-button" onclick="return confirm('本当に削除しますか？');">
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          {% endif %}
+        </table>
+
+        <!-- 課題情報 -->
+        <div class="tspace"></div>
+
+        <h3 style="text-align: center;">課題情報</h3>
+        <table border="1" style="margin: auto; text-align: center;">
+          <tr><th>講義回</th><th>提出期限</th><th>提出状況</th><th>優先度</th><th>変更</th><th>削除</th></tr>
+          {% if data.assignments %}
+            {% for as in data.assignments %}
+              <tr>
+                <td>{{ as[1] }}</td>
+                <td>{{ as[2] }}</td>
+                <td>{{ as[3] }}</td>
+                <td>{{ as[4] }}</td>
+                <td>
+                  <form method="POST" action="{{ url_for('detail') }}">
+                    <input type="hidden" name="assignment_id" value="{{ as[0] }}">
+                    <select name="new_status">
+                      <option value="未提出" {% if as[3] == "未提出" %}selected{% endif %}>未提出</option>
+                      <option value="提出済" {% if as[3] == "提出済" %}selected{% endif %}>提出済</option>
+                    </select>
+                    <button type="submit" class="change-button">変更</button>
+                  </form>
+                </td>
+                <td>
+                  <form method="POST" action="{{ url_for('delete_assignment', id=as[0]) }}">
+                    <input type="submit" value="削除" class="delete-button" onclick="return confirm('本当に削除しますか？');">
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          {% endif %}
+        </table>
+
+      <!-- テスト情報 -->
+      <div class="tspace"></div>
+
+      <h3 style="text-align: center;">テスト情報</h3>
+        <table border="1" style="margin: auto; text-align: center;">
+          <tr><th>講義回</th><th>テスト区分</th><th>テスト日</th><th>操作</th></tr>
+          {% if data.tests %}
+            {% for t in data.tests %}
+              <tr>
+                <td>{{ t[1] }}</td>
+                <td>{{ t[2] }}</td>
+                <td>{{ t[3] }}</td>
+                <td>
+                  <form method="POST" action="{{ url_for('delete_test', id=t[0]) }}">
+                    <input type="submit" value="削除" class="delete-button" onclick="return confirm('本当に削除しますか？');">
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          {% endif %}
+        </table>
+
+        <!-- メモ -->
+        <div class="tspace"></div>
+
+        <h3 style="text-align: center;">メモ</h3>
+        <table border="1" style="margin: auto; text-align: center;">
+          <tr><th>講義回</th><th>内容</th><th>操作</th></tr>
+          {% if data.memos %}
+            {% for m in data.memos %}
+              <tr>
+                <td>{{ m[1] }}回</td>
+                <td><div class="memo-content">{{ m[2] }}</div></td>
+                <td>
+                  <form method="POST" action="{{ url_for('delete_memo', id=m[0]) }}">
+                    <input type="submit" value="削除" class="delete-button" onclick="return confirm('本当に削除しますか？');">
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          {% endif %}
+        </table>
+
+        <!-- 参考リンク -->
+        <div class="tspace"></div>
+
+        <h3 style="text-align: center;">参考リンク</h3>
+        <table border="1" style="margin: auto; text-align: center;">
+          <tr><th>リンク</th><th>説明</th><th>操作</th></tr>
+          {% if data.resources %}
+            {% for r in data.resources %}
+              <tr>
+                <td>
+                  <a href="{{ r[1] }}" target="_blank">
+                    <span class="link-ellipsis" title="{{ r[1] }}">{{ r[1] }}</span>
+                  </a>
+                </td>
+                <td>
+                  <div class="link-content">{{ r[2] }}</div>
+                </td>
+                <td>
+                  <form method="POST" action="{{ url_for('delete_resource', id=r[0]) }}">
+                    <input type="submit" value="削除" class="delete-button" onclick="return confirm('本当に削除しますか？');">
+                  </form>
+                </td>
+              </tr>
+
+              <div class="tspace"></div>
+
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          {% endif %}
+        </table>
+
+        <div class="topspace"></div>
       </div>
 
-   {% else %}
-  <div class="table">
-  {% for lecture_name, data in lecture_data.items() %}
-    <h2 style="text-align:center;">{{ lecture_name }}</h2>
+      <div class="tablespace"></div>
 
-    <!-- 出席一覧 -->
-    <h3 style="text-align: center;">出席一覧</h3>
-    <table border="1" style="margin: auto; text-align: center;">
-      <tr><th>講義回</th><th>出席状況</th><th>操作</th></tr>
-      {% for att in data.attendance %}
-        <tr>
-          <td>{{ att[1] }}</td>
-          <td>{{ att[2] }}</td>
-          <td>
-            <form method="POST" action="{{ url_for('delete_attendance', id=att[0]) }}">
-              <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
-            </form>
-          </td>
-        </tr>
       {% endfor %}
-    </table>
-
-    <!-- 課題情報 -->
-    <h3 style="text-align: center;">課題情報</h3>
-    <table border="1" style="margin: auto; text-align: center;">
-      <tr><th>講義回</th><th>提出期限</th><th>提出状況</th><th>優先度</th><th>変更</th><th>削除</th></tr>
-      {% for as in data.assignments %}
-        <tr>
-          <td>{{ as[1] }}</td>
-          <td>{{ as[2] }}</td>
-          <td>{{ as[3] }}</td>
-          <td>{{ as[4] }}</td>
-          <td>
-            <form method="POST" action="{{ url_for('detail') }}">
-              <input type="hidden" name="assignment_id" value="{{ as[0] }}">
-              <select name="new_status">
-                <option value="未提出" {% if as[3] == "未提出" %}selected{% endif %}>未提出</option>
-                <option value="提出済" {% if as[3] == "提出済" %}selected{% endif %}>提出済</option>
-              </select>
-              <button type="submit">変更</button>
-            </form>
-          </td>
-          <td>
-            <form method="POST" action="{{ url_for('delete_assignment', id=as[0]) }}">
-              <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
-            </form>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-
-    <!-- テスト情報 -->
-    <h3 style="text-align: center;">テスト情報</h3>
-    <table border="1" style="margin: auto; text-align: center;">
-      <tr><th>講義回</th><th>テスト区分</th><th>テスト日</th><th>操作</th></tr>
-      {% for t in data.tests %}
-        <tr>
-          <td>{{ t[1] }}</td>
-          <td>{{ t[2] }}</td>
-          <td>{{ t[3] }}</td>
-          <td>
-            <form method="POST" action="{{ url_for('delete_test', id=t[0]) }}">
-              <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
-            </form>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-
-    <!-- メモ -->
-    <h3 style="text-align: center;">メモ</h3>
-    <table border="1" style="margin: auto; text-align: center;">
-      <tr><th>講義回</th><th>内容</th><th>操作</th></tr>
-      {% for m in data.memos %}
-        <tr>
-          <td>{{ m[1] }}回</td>
-          <td>{{ m[2] }}</td>
-          <td>
-            <form method="POST" action="{{ url_for('delete_memo', id=m[0]) }}">
-              <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
-            </form>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-
-    <!-- 参考リンク -->
-    <h3 style="text-align: center;">参考リンク</h3>
-    <table border="1" style="margin: auto; text-align: center;">
-  <tr><th>リンク</th><th>説明</th><th>操作</th></tr>
-  {% for r in data.resources %}
-    <tr>
-      <td><a href="{{ r[1] }}" target="_blank">{{ r[1] }}</a></td>
-      <td>{{ r[2] }}</td>
-      <td>
-        <form method="POST" action="{{ url_for('delete_resource', id=r[0]) }}">
-          <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
-        </form>
-      </td>
-    </tr>
-  {% endfor %}
-</table>
-
-    <hr style="margin: 3em 0;">
-  {% endfor %}
-  <div class="tablespace"></div>
-  {% endif %}
+    {% endif %}
+    <div class="space"></div>
   </div>
-<div class="space"></div>
-</div>
+
+  <script>
+    window.addEventListener("load", function () {
+      document.querySelectorAll(".memo-content,.link-content").forEach(link => {
+        const lineHeight = parseFloat(getComputedStyle(link).lineHeight);
+        const height = link.offsetHeight;
+        const lines = Math.round(height / lineHeight);
+
+        if (lines > 1) {
+          link.style.textAlign = "left";
+        }
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // ページ初期読み込み時のハッシュ付きURL対応
+      const hash = window.location.hash;
+      if (hash) {
+        const target = document.getElementById(hash.substring(1));
+        if (target) {
+          const offset = target.getBoundingClientRect().top + window.scrollY - 100;
+          window.scrollTo({ top: offset, behavior: "smooth" });
+        }
+      }
+    });
+  </script>
 </body>

@@ -3,302 +3,315 @@
 <head>
    <meta charset="UTF-8">
    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/edit.css') }}">
-   <title>to do list</title>
+   <link rel="icon" href="{{ url_for('static', filename='icon/favicon.ico') }}" type="image/x-icon">
+   <title>To Do List</title>
 </head>
 
 <body>
-<div class="head">
-    <div class="head_textbox">
-        To Do List
+    <div class="head">
+        <div class="head_textbox">
+            <font face="mv boli">To Do List</font>
+        </div>
     </div>
-</div>
-<div class="menu">
-   <ul>
-      <div class="else_menu"><li><a href="{{ url_for('home') }}">Top</a></li></div>
-      <div class="else_menu"><li><a href="{{ url_for('detail') }}">Detail</a></li></div>
-      <div class="now_menu"><li><a href="{{ url_for('edit') }}">Edit</a></li></div>
-   </ul>
-</div>
 
-<div class="main">
+    <div class="menu">
+        <ul>
+            <div class="else_menu"><li><a href="{{ url_for('home') }}">Top</a></li></div>
+            <div class="else_menu"><li><a href="{{ url_for('detail') }}">Detail</a></li></div>
+            <div class="now_menu"><li><a href="{{ url_for('edit') }}">Edit</a></li></div>
+        </ul>
+    </div>
 
-   <div class="edit_list">
-      <h1>設定リスト</h1>
-      <ul>
-         <li><a href="#le">講義情報</a></li>
-         <li><a href="#at">出席情報</a></li>
-         <li><a href="#as">課題情報</a></li>
-         <li><a href="#te">テスト情報</a></li>
-         <li><a href="#me">メモ</a></li>
-         <li><a href="#re">参考リンク</a></li>
-      </ul>
-   </div>
+    <div class="main">
+        <div class="edit_list">
+            <h1>設定リスト</h1>
+            <ul>
+                <li><a href="#le">講義情報</a></li>
+                <li><a href="#at">出席情報</a></li>
+                <li><a href="#as">課題情報</a></li>
+                <li><a href="#te">テスト情報</a></li>
+                <li><a href="#me">メモ</a></li>
+                <li><a href="#re">参考リンク</a></li>
+            </ul>
+        </div>
 
-    {% if message %}
-        <p style="text-align: center; color: red; font-weight: bold; margin-bottom: 1em;">
-            {{ message }}
-        </p>
-    {% endif %}
-  <div class="section-wrapper">
-  <div class="lec" id = "le">
-  <h2>講義の追加</h2>
-    <form method="POST" action="{{ url_for('edit') }}">
-        <input type="hidden" name="form_type" value="lecture">
-        <label>講義名: <input type="text" name="lecture_name" required></label>
-        <input type="submit" value="追加">
-    </form>
+        <div class="space">
+            {% if message %}
+                <p style="text-align: center; color: red; font-weight: bold; margin-bottom: 1em;">
+                    {{ message }}
+                </p>
+            {% endif %}
+        </div>
 
-    <hr>
-
-    <h2>登録済みの講義一覧</h2>
-    <table border="1">
-        <tr>
-            <th>講義名</th>
-            <th>操作</th>
-        </tr>
-        {% for lecture in lectures %}
-        <tr>
-            <td>{{ lecture[1] }}</td>
-            <td>
-                <form method="POST" action="{{ url_for('delete_lecture', id=lecture[0]) }}">
-                    <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
+        <div class="section-wrapper">
+            <div class="lec" id = "le">
+                <h2>講義の追加</h2>
+                <form method="POST" action="{{ url_for('edit') }}">
+                    <input type="hidden" name="form_type" value="lecture">
+                    <label>講義名: <input type="text" name="lecture_name" required></label>
+                    <input type="submit" value="追加">
                 </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-   </div>
-   </div>
 
-   <div class="space">
-        {% if message_at %}
-            <p style="text-align: center; color: red; font-weight: bold; margin-bottom: 1em;">
-                {{ message_at }}
-            </p>
-        {% endif %}
-   </div>
+                <hr>
 
-   <div class="section-wrapper">
-   <div class="att" id = "at">
-   <h2 style="text-align: center;">出席管理の追加</h2>
-   <form method="POST" action="{{ url_for('edit') }}">
-        <input type="hidden" name="form_type" value="attendance">
-        <label>講義名：</label>
-        <select name="lecture_id" required>
-            {% for lec in lectures %}
-                <option value="{{ lec[0] }}" title="{{ lec[1] }}">
-                    {{ lec[1][:8] ~ ("..." if lec[1]|length > 8 else "") }}
-                </option>
-            {% endfor %}
-        </select>
+                <h2>登録済みの講義一覧</h2>
+                <table border="1">
+                    <tr>
+                        <th>講義名</th>
+                        <th>操作</th>
+                    </tr>
+                    {% for lecture in lectures %}
+                        <tr>
+                            <td title="{{ lecture[1] }}">
+                                {{ lecture[1][:20] }}{% if lecture[1]|length > 20 %}...{% endif %}
+                            </td>
+                            <td>
+                                <form method="POST" action="{{ url_for('delete_lecture', id=lecture[0]) }}">
+                                    <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？');">
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <div class="space">
+            {% if message_at %}
+                <p style="text-align: center; color: red; font-weight: bold; margin-bottom: 1em;">
+                    {{ message_at }}
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="section-wrapper">
+            <div class="att" id = "at">
+                <h2 style="text-align: center;">出席管理の追加</h2>
+                <form method="POST" action="{{ url_for('edit') }}">
+                    <input type="hidden" name="form_type" value="attendance">
+                    <label>講義名：</label>
+                    <select name="lecture_id" required>
+                        {% for lec in lectures %}
+                            <option value="{{ lec[0] }}" title="{{ lec[1] }}">
+                                {{ lec[1][:8] ~ ("..." if lec[1]|length > 8 else "") }}
+                            </option>
+                        {% endfor %}
+                    </select>
     
-        <label>講義回：</label>
-        <select name="session" required>
-            {% for i in range(1, 16) %}
-             <option value="{{ i }}">{{ i }}回</option>
-            {% endfor %}
-        </select>
+                    <label>講義回：</label>
+                    <select name="session" required>
+                        {% for i in range(1, 16) %}
+                            <option value="{{ i }}">{{ i }}回</option>
+                        {% endfor %}
+                    </select>
 
-        <label>出席状況：</label>
-        <select name="attendance_status" required>
-            <option value="出席">出席</option>
-            <option value="欠席">欠席</option>
-            <option value="遅刻">遅刻</option>
-        </select>
+                    <label>出席状況：</label>
+                    <select name="attendance_status" required>
+                        <option value="出席">出席</option>
+                        <option value="欠席">欠席</option>
+                        <option value="遅刻">遅刻</option>
+                    </select>
     
-        <button type="submit">追加</button>
-    </form>
-   </div>
-   </div>
+                    <button type="submit">追加</button>
+                </form>
+            </div>
+        </div>
 
-   <div class="space"></div>
+        <div class="space">
+            {% if message_as %}
+                <p style="text-align: center; color: red; font-weight: bold; margin-bottom: 1em;">
+                    {{ message_as }}
+                </p>
+            {% endif %}
+        </div>
 
-   <div class="section-wrapper">
-   <div class="as" id = "as">
-   <h2 style="text-align: center;">課題情報の追加</h2>
-   <form method="POST" action="{{ url_for('edit') }}">
-    <input type="hidden" name="form_type" value="assignment">
+        <div class="section-wrapper">
+            <div class="as" id = "as">
+                <h2 style="text-align: center;">課題情報の追加</h2>
+                <form method="POST" action="{{ url_for('edit') }}">
+                    <input type="hidden" name="form_type" value="assignment">
     
-    <label>講義名：</label>
-    <select name="lecture_id" required>
-        {% for lec in lectures %}
-            <option value="{{ lec[0] }}" title="{{ lec[1] }}">
-                {{ lec[1][:8] ~ ("..." if lec[1]|length > 8 else "") }}
-            </option>
-        {% endfor %}
-    </select>
+                    <label>講義名：</label>
+                    <select name="lecture_id" required>
+                        {% for lec in lectures %}
+                            <option value="{{ lec[0] }}" title="{{ lec[1] }}">
+                                {{ lec[1][:8] ~ ("..." if lec[1]|length > 8 else "") }}
+                            </option>
+                        {% endfor %}
+                    </select>
 
-    <label>講義回：</label>
-    <select name="session" required>
-        {% for i in range(1, 16) %}
-         <option value="{{ i }}">{{ i }}回</option>
-        {% endfor %}
-    </select>
+                    <label>講義回：</label>
+                    <select name="session" required>
+                        {% for i in range(1, 16) %}
+                            <option value="{{ i }}">{{ i }}回</option>
+                        {% endfor %}
+                    </select>
 
-    <label>提出期限：</label>
-    <input type="date" name="due_date" required>
+                    <label>提出期限：</label>
+                    <input type="date" name="due_date" required>
 
-    <label>提出状況：</label>
-    <select name="status" required>
-        <option value="未提出">未提出</option>
-        <option value="提出済">提出済</option>
-    </select>
+                    <label>提出状況：</label>
+                    <select name="status" required>
+                        <option value="未提出">未提出</option>
+                        <option value="提出済">提出済</option>
+                    </select>
 
-    <label>優先度：</label>
-    <select name="priority" required>
-        <option value="高">高</option>
-        <option value="中">中</option>
-        <option value="低">低</option>
-    </select>
+                    <label>優先度：</label>
+                    <select name="priority" required>
+                        <option value="高">高</option>
+                        <option value="中">中</option>
+                        <option value="低">低</option>
+                    </select>
 
-    <button type="submit">追加</button>
-  </form>
+                    <button type="submit">追加</button>
+                </form>
+            </div>
+        </div>
 
-  {% if message_as %}
-    <p style="text-align:center; color: green;">{{ message_as }}</p>
-  {% endif %}
-</div>
-</div>
+        <div class="space">
+            {% if message_te %}
+                <p style="text-align: center; color: red; font-weight: bold; margin-bottom: 1em;">
+                    {{ message_te }}
+                </p>
+            {% endif %}
+        </div>
 
-<div class="space"></div>
+        <div class="section-wrapper">
+            <div class="test" id = "te">
+                <h2 style="text-align: center;">テスト情報の追加</h2>
+                <form method="POST" action="{{ url_for('edit') }}">
+                    <label>講義名：</label>
+                    <select name="test_lecture_id" required>
+                        {% for lec in lectures %}
+                            <option value="{{ lec[0] }}" title="{{ lec[1] }}">
+                                {{ lec[1][:8] ~ ("..." if lec[1]|length > 8 else "") }}
+                            </option>
+                        {% endfor %}
+                    </select>
 
-<div class="section-wrapper">
-<div class="test" id = "te">
-<h2 style="text-align: center;">テスト情報の追加</h2>
-<form method="POST" action="{{ url_for('edit') }}">
-    <label>講義名：</label>
-    <select name="test_lecture_id" required>
-        {% for lec in lectures %}
-            <option value="{{ lec[0] }}" title="{{ lec[1] }}">
-                {{ lec[1][:8] ~ ("..." if lec[1]|length > 8 else "") }}
-            </option>
-        {% endfor %}
-    </select>
+                    <label>講義回：</label>
+                    <select name="test_session" required>
+                        {% for i in range(1, 16) %}
+                            <option value="{{ i }}">{{ i }}回</option>
+                        {% endfor %}
+                    </select>
 
-    <label>講義回：</label>
-    <select name="test_session" required>
-        {% for i in range(1, 16) %}
-            <option value="{{ i }}">{{ i }}回</option>
-        {% endfor %}
-    </select>
+                    <label>テスト区分：</label>
+                    <select name="test_type" required>
+                        <option value="中間">中間</option>
+                        <option value="期末">期末</option>
+                        <option value="小テスト">小テスト</option>
+                    </select>
 
-    <label>テスト区分：</label>
-    <select name="test_type" required>
-        <option value="中間">中間</option>
-        <option value="期末">期末</option>
-        <option value="小テスト">小テスト</option>
-    </select>
+                    <label>テスト日：</label>
+                    <input type="date" name="test_date" required>
 
-    <label>テスト日：</label>
-    <input type="date" name="test_date" required>
+                    <button type="submit">追加</button>
+                </form>
+            </div>
+        </div>
 
-    <button type="submit">追加</button>
-</form>
+        <div class="space">
+            {% if message_memo %}
+                <p style="text-align: center; color: red; font-weight: bold; margin-bottom: 1em;">
+                    {{ message_memo }}
+                </p>
+            {% endif %}
+        </div>
 
-{% if message_te %}
-  <p style="text-align:center; color: green;">{{ message_te }}</p>
-{% endif %}
-</div>
-</div>
+        <div class="section-wrapper">
+            <div class="memo" id="me">
+                <h2 style="text-align: center;">メモの追加</h2>
+                <form method="POST" action="{{ url_for('edit') }}">
+                    <input type="hidden" name="form_type" value="memo"> <!-- 追加 -->
 
-<div class="space"></div>
+                    <label>講義名：</label>
+                    <select name="lecture_id" required>
+                        {% for lec in lectures %}
+                            <option value="{{ lec[0] }}" title="{{ lec[1] }}">
+                                {{ lec[1][:8] ~ ("..." if lec[1]|length > 8 else "") }}
+                            </option>
+                        {% endfor %}
+                    </select>
 
-<div class="section-wrapper">
-<div class="memo" id="me">
-<h2 style="text-align: center;">メモの追加</h2>
-<form method="POST" action="{{ url_for('edit') }}">
-    <input type="hidden" name="form_type" value="memo"> <!-- 追加 -->
+                    <label>講義回：</label>
+                    <select name="memo_session" required> <!-- ← 修正済み -->
+                        {% for i in range(1, 16) %}
+                            <option value="{{ i }}">{{ i }}回</option>
+                        {% endfor %}
+                    </select>
 
-    <label>講義名：</label>
-    <select name="lecture_id" required>
-        {% for lec in lectures %}
-            <option value="{{ lec[0] }}" title="{{ lec[1] }}">
-                {{ lec[1][:8] ~ ("..." if lec[1]|length > 8 else "") }}
-            </option>
-        {% endfor %}
-    </select>
+                    <label>内容：</label>
+                    <input type="text" name="memo_content" required style="width: 300px;">
 
-    <label>講義回：</label>
-    <select name="memo_session" required> <!-- ← 修正済み -->
-        {% for i in range(1, 16) %}
-            <option value="{{ i }}">{{ i }}回</option>
-        {% endfor %}
-    </select>
+                    <button type="submit">追加</button>
+                </form>
+            </div>
+        </div>
 
-    <label>内容：</label>
-    <input type="text" name="memo_content" required style="width: 300px;">
+        <div class="space">
+            {% if message_re %}
+                <p style="text-align: center; color: red; font-weight: bold; margin-bottom: 1em;">
+                    {{ message_re }}
+                </p>
+            {% endif %}
+        </div>
 
-    <button type="submit">追加</button>
-</form>
+        <div class="section-wrapper">
+            <div class="link" id = "re">
+                <h2 style="text-align:center;">参考リンクの追加</h2>
+                <form method="POST" action="{{ url_for('edit') }}">
+                    <label>講義名：</label>
+                    <select name="resource_lecture_id" required>
+                        {% for lec in lectures %}
+                            <option value="{{ lec[0] }}" title="{{ lec[1] }}">
+                                {{ lec[1][:8] ~ ("..." if lec[1]|length > 8 else "") }}
+                            </option>
+                        {% endfor %}
+                    </select>
 
-{% if message_memo %}
-  <p style="text-align:center; color: green;">{{ message_memo }}</p>
-{% endif %}
-</div>
-</div>
+                    <label>リンク：</label>
+                    <input type="url" name="resource_link" required>
 
-<div class="space"></div>
+                    <label>説明：</label>
+                    <input type="text" name="resource_description" required>
 
-<div class="section-wrapper">
-<div class="link" id = "re">
-<h2 style="text-align:center;">参考リンクの追加</h2>
-<form method="POST" action="{{ url_for('edit') }}">
-  <label>講義名：</label>
-  <select name="resource_lecture_id" required>
-        {% for lec in lectures %}
-            <option value="{{ lec[0] }}" title="{{ lec[1] }}">
-                {{ lec[1][:8] ~ ("..." if lec[1]|length > 8 else "") }}
-            </option>
-        {% endfor %}
-    </select>
+                    <input type="submit" name="add_resource" value="追加">
+                </form>
+            </div>
+        </div>
 
-  <label>リンク：</label>
-  <input type="url" name="resource_link" required>
+        <div class="space"></div>
+    </div>
 
-  <label>説明：</label>
-  <input type="text" name="resource_description" required>
+    <script>
+        window.addEventListener("load", function() {
+        // URLクエリパラメータからのスクロール処理（サーバからのリダイレクト用）
+            const params = new URLSearchParams(window.location.search);
+            const scrollTo = params.get("scroll_to");
+            if (scrollTo) {
+                const target = document.getElementById(scrollTo);
+                if (target) {
+                    const rect = target.getBoundingClientRect();
+                    const offset = rect.top + window.scrollY - (window.innerHeight / 2) + (rect.height / 2);
+                     window.scrollTo({ top: offset, behavior: "smooth" });
+                }
+            }
 
-  <input type="submit" name="add_resource" value="追加">
-</form>
-
-{% if message_re %}
-  <p style="text-align:center; color: green;">{{ message_re }}</p>
-{% endif %}
-</div>
-</div>
-
-<div class="space"></div>
-
-</div>
-<script>
-window.addEventListener("load", function() {
-  // URLクエリパラメータからのスクロール処理（サーバからのリダイレクト用）
-  const params = new URLSearchParams(window.location.search);
-  const scrollTo = params.get("scroll_to");
-  if (scrollTo) {
-    const target = document.getElementById(scrollTo);
-    if (target) {
-      const rect = target.getBoundingClientRect();
-      const offset = rect.top + window.scrollY - (window.innerHeight / 2) + (rect.height / 2);
-      window.scrollTo({ top: offset, behavior: "smooth" });
-    }
-  }
-
-  // ページ内リンククリック時のスクロール処理
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function(e) {
-      const targetId = this.getAttribute("href").substring(1);
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        e.preventDefault(); // デフォルトのジャンプを防ぐ
-        const rect = targetElement.getBoundingClientRect();
-        const offset = rect.top + window.scrollY - (window.innerHeight / 2) + (rect.height / 2);
-        window.history.pushState(null, "", `#${targetId}`);
-        window.scrollTo({ top: offset, behavior: "smooth" });
-      }
-    });
-  });
-});
-</script>
-
+            // ページ内リンククリック時のスクロール処理
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener("click", function(e) {
+                    const targetId = this.getAttribute("href").substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        e.preventDefault(); // デフォルトのジャンプを防ぐ
+                        const rect = targetElement.getBoundingClientRect();
+                        const offset = rect.top + window.scrollY - (window.innerHeight / 2) + (rect.height / 2);
+                        window.history.pushState(null, "", `#${targetId}`);
+                        window.scrollTo({ top: offset, behavior: "smooth" });
+                    }
+                });
+            });
+        });
+    </script>
 </body>

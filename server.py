@@ -15,11 +15,12 @@ def home():
     conn = sqlite3.connect("app.db")
     cursor = conn.cursor()
 
-    # 課題情報（既存）
+    # 課題情報
     cursor.execute("""
         SELECT lectures.lecture_name, assignments.session, assignments.due_date
         FROM assignments
         JOIN lectures ON assignments.lecture_id = lectures.lecture_id
+        WHERE assignments.status = '未提出'
         ORDER BY assignments.priority DESC, assignments.due_date ASC
         LIMIT 5
     """)
@@ -27,11 +28,12 @@ def home():
     while len(assignments) < 5:
         assignments.append(("-", "-", "-"))
 
-    # テスト情報（変更後）
+    # テスト情報
     cursor.execute("""
         SELECT lectures.lecture_name, tests.session, tests.test_date, tests.test_type
         FROM tests
         JOIN lectures ON tests.lecture_id = lectures.lecture_id
+        WHERE date(tests.test_date) > date('now')
         ORDER BY tests.test_date ASC
         LIMIT 5
     """)
@@ -105,7 +107,7 @@ def detail():
 
         # リンク
         cursor.execute("""
-            SELECT resource_id, link
+            SELECT resource_id, link, description
             FROM resources
             WHERE lecture_id = ?
         """, (lecture_id,))
@@ -142,12 +144,11 @@ def edit():
             lecture_name = request.form["lecture_name"]
             cursor.execute("SELECT * FROM lectures WHERE lecture_name = ?", (lecture_name,))
             if cursor.fetchone():
-                message = "⚠️ 同じ講義名は既に登録されています。"
+                return redirect(url_for("edit", scroll_to="le", msg="lecture_exists"))
             else:
                 cursor.execute("INSERT INTO lectures (lecture_name) VALUES (?)", (lecture_name,))
                 conn.commit()
-                message = "✅ 講義を追加しました。"
-            return redirect(url_for("edit", scroll_to="le", msg="lecture_added"))
+                return redirect(url_for("edit", scroll_to="le", msg="lecture_added"))
 
         # --- 出席追加処理 ---
         elif form_type == "attendance":
@@ -177,55 +178,63 @@ def edit():
                 VALUES (?, ?, ?, ?, ?)
             """, (lecture_id, session, due_date, status, priority))
             conn.commit()
-            message_as = "✅ 課題を追加しました。"
-            return redirect(url_for("edit", scroll_to="as"))
+            return redirect(url_for("edit", scroll_to="as", msg="assignment_added"))
 
+        # --- テスト追加処理 ---
         elif "test_lecture_id" in request.form and "test_session" in request.form and "test_type" in request.form and "test_date" in request.form:
             lecture_id = request.form["test_lecture_id"]
             session = request.form["test_session"]
             test_type = request.form["test_type"]
             test_date = request.form["test_date"]
-
             cursor.execute("""
                 INSERT INTO tests (lecture_id, session, test_type, test_date)
                 VALUES (?, ?, ?, ?)
             """, (lecture_id, session, test_type, test_date))
             conn.commit()
-            message_te = "✅ テスト情報を追加しました。"
-            return redirect(url_for("edit", scroll_to="te"))
+            return redirect(url_for("edit", scroll_to="te", msg="test_added"))
 
+        # --- メモ追加処理 ---
         elif form_type == "memo":
             lecture_id = request.form["lecture_id"]
             session = request.form["memo_session"]
             content = request.form["memo_content"]
-
             cursor.execute("""
                 INSERT INTO memos (lecture_id, session, content)
                 VALUES (?, ?, ?)
             """, (lecture_id, session, content))
             conn.commit()
-            message_memo = "✅ メモを追加しました。"
             return redirect(url_for("edit", scroll_to="me", msg="memo_added"))
 
+        # --- 参考リンク追加処理 ---
         elif "resource_lecture_id" in request.form and "resource_link" in request.form:
             lecture_id = request.form["resource_lecture_id"]
             link = request.form["resource_link"]
             description = request.form["resource_description"]
-
             cursor.execute("""
                 INSERT INTO resources (lecture_id, link, description)
-                VALUES (?, ?)
+                VALUES (?, ?, ?)
             """, (lecture_id, link, description))
             conn.commit()
-            message_re = "✅ 参考リンクを追加しました。"
-            return redirect(url_for("edit", scroll_to="re"))
+            return redirect(url_for("edit", scroll_to="re", msg="resource_added"))
 
     # 出席メッセージ
     msg_code = request.args.get("msg")
-    if msg_code == "duplicate":
+    if msg_code == "lecture_added":
+        message = "✅ 講義を追加しました。"
+    elif msg_code == "lecture_exists":
+        message = "⚠ 同じ講義名は既に登録されています。"
+    elif msg_code == "duplicate":
         message_at = "⚠ 同じ講義・講義回の出席情報は既に登録されています。"
     elif msg_code == "success":
         message_at = "✅ 出席情報を追加しました。"
+    elif msg_code == "assignment_added":
+        message_as = "✅ 課題を追加しました。"
+    elif msg_code == "test_added":
+        message_te = "✅ テスト情報を追加しました。"
+    elif msg_code == "memo_added":
+        message_memo = "✅ メモを追加しました。"
+    elif msg_code == "resource_added":
+        message_re = "✅ 参考リンクを追加しました。"
 
     # データ取得
     cursor.execute("SELECT * FROM lectures")

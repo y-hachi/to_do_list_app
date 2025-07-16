@@ -1,7 +1,7 @@
 ﻿* {
-        margin: 0px;
-        padding: 0px;
-    }
+    margin: 0px;
+    padding: 0px;
+}
 
 body {
     background-color: #d8f5d4;
@@ -183,14 +183,21 @@ body {
     padding: 0px 20px 0px 20px;
     box-shadow: 0px 0px 15px 0px rgba(98,98,98,0.8);
     display: flex;
-    align-items: center;     /* ← 垂直方向中央寄せ */
-    justify-content: center; /* ← 水平方向中央寄せ */
-    height: 100px;           /*  ← ボックスの高さを指定する */
+    align-items: center;     /* 垂直方向中央寄せ */
+    justify-content: center; /* 水平方向中央寄せ */
+    height: 100px;
     border-radius: 10px;
 }
 
+.listtop {
+    background-color: #ffd8d8 !important;
+    font-weight: bold;
+    padding: 6px 8px;
+    border-bottom: 1px solid #ccc;
+}
+
 @media all and (min-width: 500px) {
-  .main {
-    display: flex;
-  }
+    .main {
+        display: flex;
+    }
 }

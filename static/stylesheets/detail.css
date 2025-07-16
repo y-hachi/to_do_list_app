@@ -1,12 +1,16 @@
 ﻿* {
-        margin: 0px;
-        padding: 0px;
-    }
+    margin: 0px;
+    padding: 0px;
+}
 
 body {
     background-color: #d8f5d4;
     min-height: 100vh;
     margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 .head{
@@ -63,7 +67,7 @@ body {
 }
 
 .table {
-    background-color: #9ad0d8;
+    background-color: #bbeef6;
     text-align: center;
     width: 70%;
     margin: auto;
@@ -80,19 +84,150 @@ body {
     display: flex;
 }
 
-.tablespace {
+.topspace {
+    height: 2vmax;
+    display: flex;
+}
+
+.tspace {
     height: 1vmax;
     display: flex;
 }
 
+.tablespace {
+    height: 5vmax;
+    display: flex;
+}
+
 table {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(245, 245, 245);
 }
 
 .box {
     width: fit-content;
     background-color: rgb(240, 240, 240);
-    border: #000000 3px double; /*境界線の指定*/
+    border: #000000 3px double; 
     padding:10px;
     margin: 0 auto;
+}
+
+.memo-content {
+    display: block;
+    text-align: center;
+    word-break: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    line-height: 1.4em;
+    max-height: calc(1.4em * 3);  /* 最大3行まで表示 */
+    overflow-y: auto;             /* 縦スクロール */
+    padding-right: 5px;
+    width: 900px;
+}
+
+.link-content {
+    display: inline-block;
+    text-align: center;
+    word-break: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    line-height: 1.4em;
+    max-height: calc(1.4em * 3);  /* 最大3行まで表示 */
+    overflow-y: auto;             /* 縦スクロール */
+    padding-right: 5px;
+    width: 300px;
+}
+
+.link-ellipsis {
+    display: inline-block;
+    max-width: 200px;      /* 最大表示幅 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;   /* 折り返さず1行にする */
+    vertical-align: middle;
+}
+
+table th, table td {
+    padding: 8px;
+    text-align: center;
+}
+
+table tr:first-child {
+    background-color: #ffeab2;
+}
+
+/* 変更ボタンのスタイル */
+.change-button {
+    background-color: #b7f9ba;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* 削除ボタンのスタイル */
+.delete-button {
+    background-color: #ffb2ac;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.change-button:hover {
+    background-color: #4aff53;
+}
+
+.delete-button:hover {
+    background-color: #ff3b3b;
+}
+
+.box {
+    border:#c42fff 3px double; 
+    background-color: #f9d5d2;
+    padding:10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.lecture-nav {
+    display: grid;
+    text-align: center;
+    width: 25%;
+    margin: auto;
+    padding: 0vmax 0vmax 2vmax 0vmax;
+}
+
+.lecture-nav li a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 1vmax 2vmax;
+    color: black;
+    transition:all 0.3s;
+}
+
+.lecture-nav li a:hover:not(.active) {
+    color: black;
+    background-color: #c6dcff;
+}
+
+.lecture-nav ul {
+    border-radius :8px;
+    border-right: 1px solid #000000;
+}
+
+.lecture-nav li {
+    list-style:none;
+    min-height: 30px;
+    background: #efefef; 
+    border-top: solid 1px #000000; 
+    border-bottom: solid 1px #000000; 
+    border-right: solid 1px #000000;
+    border-left: solid 1px #000000;
+}
+
+.anchor {
+    scroll-margin-top: 120px;
 }
