@@ -74,7 +74,7 @@ def detail():
             SELECT attendance_id, session, attendance_status
             FROM attendances
             WHERE lecture_id = ?
-            ORDER BY session
+            ORDER BY CAST(session AS INTEGER)
         """, (lecture_id,))
         attendance = cursor.fetchall()
 
@@ -83,7 +83,7 @@ def detail():
             SELECT assignment_id, session, due_date, status, priority
             FROM assignments
             WHERE lecture_id = ?
-            ORDER BY session
+            ORDER BY CAST(session AS INTEGER)
         """, (lecture_id,))
         assignments = cursor.fetchall()
 
@@ -92,7 +92,7 @@ def detail():
             SELECT test_id, session, test_type, test_date
             FROM tests
             WHERE lecture_id = ?
-            ORDER BY session
+            ORDER BY CAST(session AS INTEGER)
         """, (lecture_id,))
         tests = cursor.fetchall()
 
@@ -101,7 +101,7 @@ def detail():
             SELECT memo_id, session, content
             FROM memos
             WHERE lecture_id = ?
-            ORDER BY session
+            ORDER BY CAST(session AS INTEGER)
         """, (lecture_id,))
         memos = cursor.fetchall()
 

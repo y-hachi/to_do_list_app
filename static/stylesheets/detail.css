@@ -121,7 +121,7 @@ table {
     max-height: calc(1.4em * 3);  /* 最大3行まで表示 */
     overflow-y: auto;             /* 縦スクロール */
     padding-right: 5px;
-    width: 900px;
+    width: 40vw;
 }
 
 .link-content {
@@ -134,12 +134,12 @@ table {
     max-height: calc(1.4em * 3);  /* 最大3行まで表示 */
     overflow-y: auto;             /* 縦スクロール */
     padding-right: 5px;
-    width: 300px;
+    width: 30vw;
 }
 
 .link-ellipsis {
     display: inline-block;
-    max-width: 200px;      /* 最大表示幅 */
+    max-width: 15vw;      /* 最大表示幅 */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;   /* 折り返さず1行にする */

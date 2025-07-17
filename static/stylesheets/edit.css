@@ -107,7 +107,7 @@
 .lec {
     background-color: #eed693;
     text-align: center;
-    width: 50%;
+    width: 70%;
     margin: auto;
     height: auto;
     display: flex;
@@ -131,7 +131,7 @@
 .att {
     background-color: #eed693;
     text-align: center;
-    width: 50%;
+    width: 70%;
     margin: auto;
     height: 10vh;
     display: flex;
@@ -149,7 +149,7 @@
 .as {
     background-color: #eed693;
     text-align: center;
-    width: 50%;
+    width: 70%;
     margin: auto;
     height: 10vh;
     display: flex;
@@ -167,7 +167,7 @@
 .test {
     background-color: #eed693;
     text-align: center;
-    width: 50%;
+    width: 70%;
     margin: auto;
     height: 10vh;
     display: flex;
@@ -185,7 +185,7 @@
 .memo {
     background-color: #eed693;
     text-align: center;
-    width: 50%;
+    width: 70%;
     margin: auto;
     height: 10vh;
     display: flex;
@@ -203,7 +203,7 @@
 .link {
     background-color: #eed693;
     text-align: center;
-    width: 50%;
+    width: 70%;
     margin: auto;
     height: 10vh;
     display: flex;
