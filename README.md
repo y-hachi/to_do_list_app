@@ -1,6 +1,6 @@
 # To Do Listアプリ
 ## 動作環境（確認済み）
-OS：Windows
+OS：Windows  
 ブラウザ：Microsoft Edge  
 
 ## 使用方法
