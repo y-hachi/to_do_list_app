@@ -276,7 +276,7 @@ def delete_attendance(id):
     cursor.execute("DELETE FROM attendances WHERE attendance_id = ?", (id,))
     conn.commit()
     conn.close()
-    return redirect(url_for("edit"))
+    return redirect(url_for("detail"))
 
 @app.route("/delete_assignment/<int:id>", methods=["POST"])
 def delete_assignment(id):
